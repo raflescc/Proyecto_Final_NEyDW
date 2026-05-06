@@ -1,3 +1,24 @@
-<h1>Order {{ order.id }}</h1>
-<p>Status: {{ order.status }}</p>
-<p>Total: ${{ order.total }}</p>
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Orden #{{ order.id }}</h2>
+
+<p><strong>Estado:</strong> {{ order.status }}</p>
+<p><strong>Total:</strong> ${{ order.total }}</p>
+
+<h3>Obras compradas:</h3>
+
+<ul>
+    {% for item in order.orderitem_set.all %}
+        <li>
+            {{ item.artwork.title }} - ${{ item.price }}
+        </li>
+    {% empty %}
+        <li>No hay productos en esta orden</li>
+    {% endfor %}
+</ul>
+
+<a href="/">Volver al inicio</a>
+
+{% endblock %}

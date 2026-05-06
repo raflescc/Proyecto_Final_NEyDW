@@ -40,4 +40,3 @@ def create_order(request, pk):
 def order_detail(request, pk):
     order = get_object_or_404(Order, pk=pk)
     return render(request, 'orders/detail.html', {'order': order})
-

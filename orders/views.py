@@ -1,13 +1,16 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404, redirect, render
 from marketplace.models import Artwork
 from .models import Order, OrderItem
-from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
 @login_required
 def create_order(request, pk):
     artwork = get_object_or_404(Artwork, pk=pk)
+
+    if artwork.stock <= 0:
+        return redirect('artwork_list')
 
     order = Order.objects.create(
         user=request.user,
@@ -20,6 +23,13 @@ def create_order(request, pk):
         artwork=artwork,
         price=artwork.price
     )
+
+    artwork.stock -= 1
+
+    if artwork.stock == 0:
+        artwork.is_available = False
+
+    artwork.save()
 
     # marcar como pagado (simulación)
     order.status = 'paid'

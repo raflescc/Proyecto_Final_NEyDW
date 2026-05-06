@@ -1,6 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
 <h1>{{ artwork.title }}</h1>
 <img src="{{ artwork.image.url }}" width="300">
 <p>{{ artwork.description }}</p>
 <p>${{ artwork.price }}</p>
 
 <a href="{% url 'create_order' artwork.id %}">Comprar</a>
+
+{% endblock %}

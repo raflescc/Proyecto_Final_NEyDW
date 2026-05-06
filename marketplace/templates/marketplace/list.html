@@ -1,0 +1,9 @@
+<h1>Artworks</h1>
+
+{% for art in artworks %}
+  <div>
+    <p>{{ art.title }} - ${{ art.price }}</p>
+  </div>
+{% empty %}
+  <p>No hay obras disponibles</p>
+{% endfor %}

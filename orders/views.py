@@ -1,9 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from marketplace.models import Artwork
 from .models import Order, OrderItem
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
+@login_required
 def create_order(request, pk):
     artwork = get_object_or_404(Artwork, pk=pk)
 
@@ -28,3 +30,4 @@ def create_order(request, pk):
 def order_detail(request, pk):
     order = get_object_or_404(Order, pk=pk)
     return render(request, 'orders/detail.html', {'order': order})
+

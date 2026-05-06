@@ -1,3 +1,6 @@
+{% extends "base.html" %}
+
+{% block content %}
 <h1>Artworks</h1>
 
 {% for art in artworks %}
@@ -7,3 +10,5 @@
 {% empty %}
   <p>No hay obras disponibles</p>
 {% endfor %}
+
+{% endblock %}

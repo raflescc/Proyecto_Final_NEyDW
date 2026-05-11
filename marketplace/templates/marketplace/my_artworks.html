@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Mis obras</h2>
+<div class="row">
+    {% for art in artworks %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                {% if art.image %}
+                    <img src="{{ art.image.url }}"
+                         class="card-img-top"
+                         alt="{{ art.title }}">
+                {% endif %}
+                <div class="card-body">
+                    <h5>{{ art.title }}</h5>
+                    <p>Precio: ${{ art.price }}</p>
+                    <p>Stock: {{ art.stock }}</p>
+                    <p>
+                        Disponible:
+                        {% if art.is_available %}
+                            Sí
+                        {% else %}
+                            No
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    {% empty %}
+        <p>No has publicado obras</p>
+    {% endfor %}
+</div>
+
+{% endblock %}

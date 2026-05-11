@@ -21,19 +21,12 @@ def create_artwork(request):
         return redirect('artwork_list')
 
     if request.method == 'POST':
-
         form = ArtworkForm(request.POST, request.FILES)
-
         if form.is_valid():
-
             artwork = form.save(commit=False)
-
             artwork.artist = request.user
-
             artwork.save()
-
             return redirect('artwork_detail', artwork.id)
-
     else:
         form = ArtworkForm()
 
@@ -41,4 +34,18 @@ def create_artwork(request):
         request,
         'marketplace/create_artwork.html',
         {'form': form}
+    )
+
+@login_required
+def my_artworks(request):
+
+    if request.user.role != 'artist':
+        return redirect('artwork_list')
+
+    artworks = Artwork.objects.filter(artist=request.user)
+
+    return render(
+        request,
+        'marketplace/my_artworks.html',
+        {'artworks': artworks}
     )

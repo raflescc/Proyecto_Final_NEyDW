@@ -12,11 +12,20 @@ def register(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
+        role = request.POST['role']
 
+        # Verificar si el usuario ya existe
         if User.objects.filter(username=username).exists():
             return render(request, 'accounts/register.html', {'error': 'Usuario ya existe'})
 
-        user = User.objects.create_user(username=username, password=password)
+        # Crear usuario
+        user = User.objects.create_user(
+            username=username,
+            password=password,
+            role=role
+        )
+
+        # Iniciar sesión automáticamente
         login(request, user)
         return redirect('artwork_list')
 
